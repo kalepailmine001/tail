@@ -2,7 +2,7 @@
 
 for i in {1..150}; do
   echo "⏳ Requesting /earning/$i..."
-  curl "https://rewardvid.com/earning/$i" \
+  curl -s "https://rewardvid.com/earning/$i" \
     -X POST \
     -H 'accept: application/json, text/javascript, */*; q=0.01' \
     -H 'accept-language: en-US,en;q=0.9' \
