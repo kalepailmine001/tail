@@ -1,20 +1,11 @@
-name: Run vid.sh in 20 Parallel Jobs
-
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
-
+name: CI
+on: [push]
 jobs:
-  run-vid:
-    name: Job ${{ matrix.job_id }}
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        job_id: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+  build:
+    runs-on: macos-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Make vid.sh executable and run
-        run: chmod +x vid.sh && ./vid.sh
+    - uses: actions/checkout@v4
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        detached: true
